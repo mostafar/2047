@@ -127,25 +127,10 @@ GameManager.prototype.moveTile = function (tile, cell) {
 };
 
 var isMergable = function (tile1, tile2) {
-    if (tile1.value % 2 == 0) {
-        if (tile2.value === tile1.value - 1 || tile2.value === tile1.value)
-            return true;
-    }
-    else {
-        if (tile2.value === 1)
-            return true;
-    }
+    var isPowerOfTwo = function (x) { return (x != 0) && ((x & (x - 1)) == 0); };
 
-    if (tile2.value % 2 == 0) {
-        if (tile1.value === tile2.value - 1)
-            return true;
-    }
-    else {
-        if (tile1.value === 1)
-            return true;
-    }
-
-    return false;
+    return isPowerOfTwo(tile1.value + tile2.value) || 
+           isPowerOfTwo(tile1.value + tile2.value + 1);
 };
 
 // Move tiles on the grid in the specified direction
