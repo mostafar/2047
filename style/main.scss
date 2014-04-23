@@ -350,7 +350,7 @@ hr {
 
   // Build tile colors
   @while $exponent <= $limit {
-    $power: pow($base, $exponent);
+    $power: pow($base, $exponent) - 1;
 
     &.tile-#{$power} .tile-inner {
       // Calculate base background color
