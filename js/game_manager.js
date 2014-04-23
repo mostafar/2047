@@ -68,7 +68,7 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    var value = Math.random() < 0.7 ? 2 : 1;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -126,6 +126,28 @@ GameManager.prototype.moveTile = function (tile, cell) {
   tile.updatePosition(cell);
 };
 
+var isMergable = function (tile1, tile2) {
+    if (tile1.value % 2 == 0) {
+        if (tile2.value === tile1.value - 1 || tile2.value === tile1.value)
+            return true;
+    }
+    else {
+        if (tile2.value === 1)
+            return true;
+    }
+
+    if (tile2.value % 2 == 0) {
+        if (tile1.value === tile2.value - 1)
+            return true;
+    }
+    else {
+        if (tile1.value === 1)
+            return true;
+    }
+
+    return false;
+};
+
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
   // 0: up, 1: right, 2: down, 3: left
@@ -153,8 +175,8 @@ GameManager.prototype.move = function (direction) {
         var next      = self.grid.cellContent(positions.next);
 
         // Only one merger per row traversal?
-        if (next && next.value === tile.value && !next.mergedFrom) {
-          var merged = new Tile(positions.next, tile.value * 2);
+        if (next && isMergable(tile, next) && !next.mergedFrom) {
+          var merged = new Tile(positions.next, tile.value + next.value);
           merged.mergedFrom = [tile, next];
 
           self.grid.insertTile(merged);
@@ -256,7 +278,7 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
           var other  = self.grid.cellContent(cell);
 
-          if (other && other.value === tile.value) {
+          if (other && isMergable(tile, other)) {
             return true; // These two tiles can be merged
           }
         }
