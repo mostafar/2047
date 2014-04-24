@@ -14,4 +14,6 @@ Many thanks to [rayhaanj](https://github.com/rayhaanj), [Mechazawa](https://gith
 
 ### Screenshot
 
-There is not any screenshot because I never reached 2047 :smile:
+![alt tag](https://raw.github.com/mostafar/2047/master/meta/won.png)
+
+I never reached 2047, screenshot belongs to Mohammad Moein Zera'atkar :smile:
