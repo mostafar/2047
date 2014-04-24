@@ -432,9 +432,18 @@ hr {
 
   // Build tile colors
   @while $exponent <= $limit {
-    $power: pow($base, $exponent) - 1;
+    $power: pow($base, $exponent);
 
     &.tile-#{$power} .tile-inner {
+        @if $power >= 1000 {
+            font-size: 40px;
+        }
+        @else {
+            font-size: 55px;
+        }
+    }
+
+    &.tile-#{$power - 1} .tile-inner {
       // Calculate base background color
       $gold-percent: ($exponent - 1) / ($limit - 1) * 100;
       $mixed-background: mix($tile-gold-color, $tile-color, $gold-percent);
